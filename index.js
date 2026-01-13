@@ -108,7 +108,7 @@ app.post('/api/borrowings', async (req, res) => {
   }
 
   try {
-    // Check availability
+    // Check availability of the book
     const book = await pool.query('SELECT available_copies FROM books WHERE id = $1', [book_id]);
     if (book.rows.length === 0) return res.status(404).json({ error: 'Book not found' });
     if (book.rows[0].available_copies <= 0) return res.status(400).json({ error: 'Book is not available' });
